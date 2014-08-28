@@ -106,7 +106,6 @@ function mm_texture.clear(identifier)
 	core.set_background(identifier,"")
 end
 
---------------------------------------------------------------------------------
 function mm_texture.set_generic(identifier)
 	--try texture pack first
 	if mm_texture.texturepack ~= nil then
@@ -116,16 +115,25 @@ function mm_texture.set_generic(identifier)
 			return true
 		end
 	end
-	
-	if mm_texture.defaulttexturedir ~= nil then
-		local path = mm_texture.defaulttexturedir .. DIR_DELIM .."menu_" ..
+
+	local file=io.open(mm_texture.defaulttexturedir ,"r")
+
+	if file ~= nil then 
+		io.close(file)
+		local path = mm_texture.defaulttexturedir .."menu_" ..
 										identifier .. ".png"
 		if core.set_background(identifier,path) then
 			return true
 		end
+	else
+		local path = defaulttexturedir .."menu_" ..
+										identifier .. ".png"
+		if core.set_background(identifier,path) then
+			return true
+		end
+
 	end
-	
-	return false
+
 end
 
 --------------------------------------------------------------------------------
